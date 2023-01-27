@@ -1,8 +1,6 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Running the NextTrip app
 
 In the project directory, you can run:
 
@@ -29,42 +27,34 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Assumptions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+I assumed the provided APIs will be up and working 100% of the time.  If there are network errors, the error will be logged to the console, but there are no user-facing messages.
+I also assumed that the values received from the route and direction APIs would be valid inputs for the direction and stops APIs
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Why did you choose this framework?
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+I chose to use React because it's a popular framework for creating front-end applications.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### How did your solution for this problem evolve over time?
 
-## Learn More
+My first goal was to have a functionally working application.  Once that was complete, I looked for reusability (as in my Selector component) and efficiency.  Finally, I tried prettifying
+the app a bit: cleaned up the layout, hid the lower components while the higher components were still being interacted with.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Completeness: Were problems addressed, did the code run? Is it production ready (if not, explain why)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This is NOT production ready.  I'd call this a Proof of Concept to demonstrate that react can be used to fetch data from Metro Transit and display it to customers.
 
-### Code Splitting
+If we were to send this to production:
+1. We'd want designers to mock up a prettier UI
+2. I'd want more tests (details in the test files)
+3. I'd want better error handling (if the APIs are down, we should fail gracefully and display some friendly message to the user)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Testing—how did you test?
 
-### Analyzing the Bundle Size
+Tested using Jest.  I quickly realized that testing Hooks would require me switching to the React Testing Library, as Enzyme is dead.  I'm not currently familiar with the React Testing Library,
+so I obted to submit my code as-is, but I defined the tests I would add if I were more familiar w/ RTL inside my .test files.  I'd also create mocks for the API calls so that our tests don't
+put actual traffic over the wire.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+I'd also want to add tests around invalid input parameters:  asking for directions for a route that doesn't exist should fail gracefully (a helpful message being displayed to the user, perhaps).  Likewise 
+for asking for stops for a route/direction combo that doesn't exist.
